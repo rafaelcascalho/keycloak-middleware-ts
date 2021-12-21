@@ -1,10 +1,12 @@
 {
-  "name": "keycloak-backend",
-  "version": "2.0.1",
+  "name": "@rafaelcascalho/keycloak-middleware",
+  "version": "1.0.5",
   "description": "Keycloak Node.js minimalist connector for backend services integration.",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "prebuild": "tsc --build --clean --dry",
+    "prepare": "npm run build",
     "build": "tsc --build",
     "test": "node japaFile.js",
     "lint": "ts-standard",
@@ -13,7 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jkyberneees/keycloak-backend.git"
+    "url": "git+https://github.com/rafaelcascalho/keycloak-middleware"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/rafaelcascalho"
   },
   "keywords": [
     "keycloak",
@@ -25,14 +30,17 @@
   "files": [
     "LICENSE",
     "README.md",
-    "src/"
+    "lib/"
   ],
-  "author": "Rafael Cascalho <cascalhoeng@gmail.com>",
+  "author": {
+    "name": "Rafael Cascalho <cascalhoeng@gmail.com>",
+    "email": "cascalhoeng@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jkyberneees/keycloak-backend/issues"
+    "url": "https://github.com/rafaelcascalho/keycloak-middleware/issues"
   },
-  "homepage": "https://github.com/jkyberneees/keycloak-backend#readme",
+  "homepage": "https://github.com/rafaelcascalho/keycloak-middleware#readme",
   "dependencies": {
     "axios": "^0.21.0",
     "jsonwebtoken": "^8.5.1"

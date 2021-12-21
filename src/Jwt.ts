@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import { AxiosInstance } from 'axios'
 
 import Token from './Token'
+import { KeycloakConfig } from './interfaces'
 
 const manyArgsPromisify = (fn: Function) => {
   return (...args: any) => {
@@ -15,7 +16,7 @@ class Jwt {
   private readonly config: any
   private readonly request: AxiosInstance
 
-  constructor(config: any, request: AxiosInstance) {
+  constructor(config: KeycloakConfig, request: AxiosInstance) {
     this.config = config
     this.request = request
   }

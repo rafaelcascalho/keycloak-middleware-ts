@@ -4,8 +4,7 @@ export interface KeycloakConfig {
   client_id: string,
   client_secret?: string,
   username: string,
-  password: string,
-  clients: string
+  password: string
 }
 
 export interface KeycloakTokenResponse {

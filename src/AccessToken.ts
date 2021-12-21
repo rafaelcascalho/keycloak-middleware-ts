@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios'
 
 import { KeycloakTokenResponse } from './interfaces'
+import { KeycloakConfig } from './interfaces'
 
 class AccessToken {
   private accessToken: string
@@ -9,7 +10,7 @@ class AccessToken {
   private readonly request: AxiosInstance
   private readonly baseUrl: string
 
-  constructor(config: any, request: AxiosInstance) {
+  constructor(config: KeycloakConfig, request: AxiosInstance) {
     this.accessToken = ''
     this.refreshToken = ''
     this.config = config
