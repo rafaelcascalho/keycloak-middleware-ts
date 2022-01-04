@@ -16,7 +16,7 @@ class Jwt {
   private readonly config: any
   private readonly request: AxiosInstance
 
-  constructor(config: KeycloakConfig, request: AxiosInstance) {
+  constructor(config: KeycloakConfig, request: AxiosInstance | any) {
     this.config = config
     this.request = request
   }
