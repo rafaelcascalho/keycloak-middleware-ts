@@ -25,3 +25,7 @@ export interface User {
 export interface UpdateCredentialOptions {
   temporary?: boolean
 }
+
+export interface Headers {
+  Authorization: string
+}

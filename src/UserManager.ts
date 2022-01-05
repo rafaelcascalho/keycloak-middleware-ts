@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosResponse } from 'axios'
 
 import AccessToken from './AccessToken'
-import { KeycloakConfig, User, UpdateCredentialOptions } from './interfaces'
+import { KeycloakConfig, User, UpdateCredentialOptions, Headers } from './interfaces'
 
 class UserManager {
   private readonly baseUrl: string
@@ -9,7 +9,7 @@ class UserManager {
   private readonly config: KeycloakConfig
   private readonly request: AxiosInstance
 
-  constructor(config: KeycloakConfig, request: AxiosInstance, token: AccessToken) {
+  constructor(config: KeycloakConfig, request: AxiosInstance | any, token: AccessToken) {
     this.config = config
     this.request = request
     this.token = token
@@ -22,7 +22,7 @@ class UserManager {
     const url = `${this.baseUrl}/${id}`
     const response = await this.request.get(url, { headers })
 
-    return response.data
+    return response?.data
   }
 
   async roles(id: string, clientsIds: Array<string> = [], includeRealmRoles = false) {
@@ -42,8 +42,19 @@ class UserManager {
     return this.batchAndParseRolesPromises(promises)
   }
 
+  async create(user: User) {
+    const endpoint = this.baseUrl
+    const headers = await this.mountHeaders()
+
+    await this.request.post(endpoint, user, { headers })
+    await Promise.allSettled([
+      this.savePassword(user.id, user.password, headers),
+      this.verifyEmail(user.id, headers)
+    ])
+  }
+
   // IMPROVE: the any types used in this function need to be replaced by a declared interface
-  async batchAndParseRolesPromises(promises: Array<Promise<AxiosResponse<any>>>) {
+  private async batchAndParseRolesPromises(promises: Array<Promise<AxiosResponse<any>>>) {
     const batchResponses = await Promise.allSettled(promises)
     const successes = batchResponses.filter(this.filterFulfilledResults)
     return successes.length ?
@@ -80,20 +91,8 @@ class UserManager {
     return { Authorization: `Bearer ${accessToken}` }
   }
 
-  async create(user: User) {
-    const endpoint = this.baseUrl
-    const headers = await this.mountHeaders()
-
-    await this.request.post(endpoint, user, { headers })
-    await Promise.allSettled([
-      this.savePassword(user.id, user.password),
-      this.verifyEmail(user.id)
-    ])
-  }
-
-  private async savePassword(id: string, credential: string, options: UpdateCredentialOptions = {}) {
+  private async savePassword(id: string, credential: string, headers: Headers, options: UpdateCredentialOptions = {}) {
     const endpoint = `${this.baseUrl}/${id}/reset-password`
-    const headers = await this.mountHeaders()
     const body = {
       type: "password",
       value: credential,
@@ -103,9 +102,8 @@ class UserManager {
     await this.request.put(endpoint, body, { headers })
   }
 
-  private async verifyEmail(id: string) {
+  private async verifyEmail(id: string, headers: Headers) {
     const endpoint = `${this.baseUrl}/${id}/send-verify-email`
-    const headers = await this.mountHeaders()
 
     await this.request.put(endpoint, null, { headers })
   }

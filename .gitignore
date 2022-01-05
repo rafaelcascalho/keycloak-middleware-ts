@@ -64,3 +64,6 @@ lib
 
 # Personal notes
 notes
+
+# lock file
+*lock.json

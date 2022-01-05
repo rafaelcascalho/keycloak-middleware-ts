@@ -10,7 +10,7 @@ class AccessToken {
   private readonly request: AxiosInstance
   private readonly baseUrl: string
 
-  constructor(config: KeycloakConfig, request: AxiosInstance) {
+  constructor(config: KeycloakConfig, request: AxiosInstance | any) {
     this.accessToken = ''
     this.refreshToken = ''
     this.config = config
@@ -24,7 +24,7 @@ class AccessToken {
 
     try {
       const response = await this.request.get(endpoint, { headers })
-      return response.data
+      return response?.data
     } catch (error) {
       await this.refresh(this.refreshToken)
       return this.info(this.accessToken)
@@ -46,7 +46,7 @@ class AccessToken {
       this.resetTokens(response.data)
     } catch (error) {
       this.accessToken = ''
-      return this.get()
+      this.get()
     }
   }
 

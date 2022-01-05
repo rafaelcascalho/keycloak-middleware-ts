@@ -5,7 +5,7 @@ import UserManager from './UserManager'
 import AccessToken from './AccessToken'
 import { KeycloakConfig } from './interfaces'
 
-function createKeycloakCtx(config: KeycloakConfig, request: AxiosInstance) {
+function createKeycloakCtx(config: KeycloakConfig, request?: AxiosInstance | any) {
   if (!request) request = Axios.create({ baseURL: config.auth_server_url })
 
   const accessToken = new AccessToken(config, request)
