@@ -13,7 +13,7 @@ export interface KeycloakTokenResponse {
 }
 
 export interface User {
-  id: string
+  id?: string
   email: string
   enabled: boolean
   username: string
