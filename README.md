@@ -1,5 +1,8 @@
-# keycloak-backend
-Keycloak Node.js minimalist connector for backend services integration. It aims to serve as base for high performance authorization middlewares.
+# keycloak-backend-ts
+
+This is an TS implementation of the JS version of the [keycloak-backend npm package.](https://github.com/jkyberneees/keycloak-backend)
+
+The documentation below is from the same package, but will be rewritten soon.
 
 > Note: Version 2.x uses `jsonwebtoken 8.x`
 

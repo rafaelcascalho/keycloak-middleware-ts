@@ -1,5 +1,5 @@
 {
-  "name": "@rafaelcascalho/keycloak-middleware",
+  "name": "keycloak-middleware-ts",
   "version": "1.0.6",
   "description": "Keycloak Node.js minimalist connector for backend services integration.",
   "main": "lib/index.js",
