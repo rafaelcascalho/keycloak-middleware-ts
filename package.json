@@ -1,6 +1,6 @@
 {
   "name": "keycloak-middleware-ts",
-  "version": "1.0.6",
+  "version": "1.0.0",
   "description": "Keycloak Node.js minimalist connector for backend services integration.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -8,29 +8,29 @@
     "prebuild": "tsc --build --clean --dry",
     "prepare": "npm run build",
     "build": "tsc --build",
-    "test": "node japaFile.js",
     "lint": "ts-standard",
     "format": "ts-standard --fix",
-    "coverage": "nyc --reporter=lcov npm run test"
+    "test": "node japaFile.js",
+    "test:cov": "nyc --reporter=lcov npm run test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rafaelcascalho/keycloak-middleware"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/rafaelcascalho"
   },
   "keywords": [
     "keycloak",
     "auth",
     "oauth",
     "jwt",
-    "rest"
+    "rest",
+    "typescript",
+    "ts"
   ],
   "files": [
     "LICENSE",
     "README.md",
-    "lib/"
+    "lib/",
+    "!test/*.spec.ts"
   ],
   "author": {
     "name": "Rafael Cascalho <cascalhoeng@gmail.com>",
