@@ -32,7 +32,7 @@ class MockAxios {
       given_name: '',
       family_name: '',
       email: ''
-    }})
+    }, headers: { location: '/1' }})
   }
 
   async put() {

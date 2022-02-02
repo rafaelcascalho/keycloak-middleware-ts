@@ -1,10 +1,12 @@
 export interface KeycloakConfig {
-  realm: string,
-  auth_server_url: string,
-  client_id: string,
-  client_secret?: string,
-  username: string,
+  realm: string
+  auth_server_url: string
+  client_id: string
+  client_secret?: string
+  username: string
   password: string
+  jwtKey?: string
+  jwtKeyAlgorithms?: Array<string>
 }
 
 export interface KeycloakTokenResponse {

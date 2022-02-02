@@ -1,4 +1,4 @@
-const ONE_MILLISECOND = 1000
+import { ONE_MILLISECOND } from './constants'
 
 class Token {
   private readonly header: string

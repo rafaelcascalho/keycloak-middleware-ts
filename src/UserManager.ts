@@ -46,10 +46,11 @@ class UserManager {
     const endpoint = this.baseUrl
     const headers = await this.mountHeaders()
 
-    await this.request.post(endpoint, user, { headers })
+    const response = await this.request.post(endpoint, user, { headers })
+    const userId: string = response.headers.location.split('/').pop()
     await Promise.allSettled([
-      this.savePassword(user.id, user.password, headers),
-      this.verifyEmail(user.id, headers)
+      this.savePassword(userId, user.password, headers),
+      this.verifyEmail(userId, headers)
     ])
   }
 
@@ -82,8 +83,7 @@ class UserManager {
   }
 
   private listRolesNames(list: Array<string>, names: Array<string>) {
-    list.push(...names)
-    return list
+    return [...list, ...names]
   }
 
   private async mountHeaders() {
