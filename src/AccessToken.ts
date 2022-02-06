@@ -34,8 +34,8 @@ class AccessToken {
   async refresh(refreshToken: string): Promise<any> {
     const requestParams = {
       grant_type: 'refresh_token',
-      client_id: this.config.client_id,
-      client_secret: this.config.client_secret,
+      clientId: this.config.clientId,
+      clientSecret: this.config.clientSecret,
       refresh_token: refreshToken
     }
     const params = new URLSearchParams(requestParams).toString()
@@ -60,8 +60,8 @@ class AccessToken {
       grant_type: 'password',
       username: this.config.username,
       password: this.config.password,
-      client_id: this.config.client_id,
-      client_secret: this.config.client_secret
+      clientId: this.config.clientId,
+      clientSecret: this.config.clientSecret
     }
     const params = new URLSearchParams(requestParams)
     const endpoint = `${this.baseUrl}/protocol/openid-connect/token`

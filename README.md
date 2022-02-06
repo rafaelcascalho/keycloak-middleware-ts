@@ -30,8 +30,8 @@ More about Keycloak: http://www.keycloak.org/
 const keycloak = require('keycloak-backend')({
     "realm": "your realm name",
     "auth-server-url": "http://keycloak.dev:8080",
-    "client_id": "your client name",
-    "client_secret": "c88a2c21-9d1a-4f83-a18d-66d75c4d8020", // if required
+    "clientId": "your client name",
+    "clientSecret": "c88a2c21-9d1a-4f83-a18d-66d75c4d8020", // if required
     "username": "your service username",
     "password": "your service password"
 });

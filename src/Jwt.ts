@@ -13,7 +13,7 @@ const manyArgsPromisify = (fn: Function) => {
 const asyncVerify = manyArgsPromisify(jwt.verify)
 
 class Jwt {
-  private readonly config: any
+  private readonly config: KeycloakConfig
   private readonly request: AxiosInstance
 
   constructor(config: KeycloakConfig, request: AxiosInstance | any) {
@@ -21,16 +21,22 @@ class Jwt {
     this.request = request
   }
 
-  async verifyOffline(accessToken: string, cert: string, options = {}) {
-    await asyncVerify(accessToken, cert, options)
+  async verify(accessToken: string, offline=true) {
+    if (offline) return this.verifyOffline(accessToken)
+
+    return this.verifyViaRequest(accessToken)
+  }
+
+  private async verifyOffline(accessToken: string) {
+    const options = { algorithms: this.config.jwtKeyAlgorithms }
+    await asyncVerify(accessToken, this.config.jwtKey, options)
     return new Token(accessToken)
   }
 
-  async verify(accessToken: string) {
+  private async verifyViaRequest(accessToken: string) {
     const headers = { Authorization: `Bearer ${accessToken}` }
     const endpoint = `/auth/realms/${this.config.realm}/protocol/openid-connect/userinfo`
     await this.request.get(endpoint, { headers })
-
     return new Token(accessToken)
   }
 }

@@ -22,11 +22,11 @@ class Token {
     return true
   }
 
-  hasAppRole(app: string, role: string) {
+  hasAppRole(app: string, role: string): boolean {
     return this.content.resource_access[app].roles.includes(role)
   }
 
-  hasRealmRole(role: string) {
+  hasRealmRole(role: string): boolean {
     return this.content.realm_access.roles.includes(role)
   }
 

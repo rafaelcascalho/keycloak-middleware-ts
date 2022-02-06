@@ -36,7 +36,7 @@ export default function createKeycloakCtx(config: KeycloakConfig, request?: Axio
     config.jwtKeyAlgorithms = algorithms || DEFAULT_ALGORITHMS
   }
 
-  if (!request) request = Axios.create({ baseURL: config.auth_server_url })
+  if (!request) request = Axios.create({ baseURL: config.authServerUrl })
 
   const accessToken = new AccessToken(config, request)
   const users = new UserManager(config, request, accessToken)

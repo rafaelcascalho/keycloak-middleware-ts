@@ -1,11 +1,14 @@
 import { KeycloakConfig } from '../src/interfaces'
+import { cert } from './mock/cert'
 
 export const mockConfig: KeycloakConfig = {
   realm: 'test',
-  auth_server_url: 'https://localhost:8081',
-  client_id: 'abc123',
+  authServerUrl: 'https://localhost:8081',
+  clientId: 'abc123',
   username: 'test_user',
-  password: 'test_user_pass'
+  password: 'test_user_pass',
+  jwtKey: cert,
+  jwtKeyAlgorithms: ['ES512']
 }
 
 class MockAxios {
@@ -22,17 +25,19 @@ class MockAxios {
     this._postCalls++
 
     if (endpoint.includes('token'))
-      return Promise.resolve({ data: { refresh_token: '', access_token: '' }})
+      return Promise.resolve({ data: { refresh_token: '', access_token: '' } })
 
-    return Promise.resolve({data: {
-      sub: 0,
-      email_verified: true,
-      name: '',
-      preferred_username: '',
-      given_name: '',
-      family_name: '',
-      email: ''
-    }, headers: { location: '/1' }})
+    return Promise.resolve({
+      data: {
+        sub: 0,
+        email_verified: true,
+        name: '',
+        preferred_username: '',
+        given_name: '',
+        family_name: '',
+        email: ''
+      }, headers: { location: '/1' }
+    })
   }
 
   async put() {

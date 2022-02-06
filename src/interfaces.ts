@@ -1,8 +1,8 @@
 export interface KeycloakConfig {
   realm: string
-  auth_server_url: string
-  client_id: string
-  client_secret?: string
+  authServerUrl: string
+  clientId: string
+  clientSecret?: string
   username: string
   password: string
   jwtKey?: string
