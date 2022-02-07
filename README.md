@@ -77,3 +77,4 @@ For the foreseeable future, these are the next steps:
 - [  ] create pipelines to run the automated tests, static code analysis
 - [  ] add pre commit step automation for tests, linting and formatting
 - [  ] improve code coverage to enable threshold of 90-100%
+- [  ] add tech stack
