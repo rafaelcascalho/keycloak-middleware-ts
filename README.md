@@ -46,6 +46,8 @@ const token = await keycloak.jwt.verify(accessToken);
 if (token.isExpired()) throw new Error("your error message");
 ```
 
+To check the full API refer to the [lib API docs here.](docs/API.md)
+
 ## Contributing
 
 To contribute you can create issues or modify the code or docs yourself, and submit the PRs for new versions. If you're willing
