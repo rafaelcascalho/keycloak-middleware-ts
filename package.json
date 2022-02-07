@@ -1,7 +1,7 @@
 {
   "name": "keycloak-middleware-ts",
   "version": "1.0.2",
-  "description": "Keycloak Node.js minimalist connector for backend services integration.",
+  "description": "Keycloak minimalist middleware connector for backend services.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

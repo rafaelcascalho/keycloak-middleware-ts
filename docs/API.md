@@ -2,9 +2,10 @@
 
 This is the documentation of the module API. Down below you'll find the modules functions and their usage explained.
 
-## jwt
+## .jwt
 
-This API consist of methods to verify a jwt access token online or offline with different strategies.
+This API consist of methods to verify a jwt access token online or offline with different strategies. It's accessible in the
+keycloak context over the property `.jwt`.
 
 ### .verify
 
@@ -34,7 +35,8 @@ This strategy simply executes a request to keycloak to verify the received jwt.
 // verification via request to keycloak
 try {
   // requestJwt - the access token received from the request
-  const tokenInfo = await keycloak.jwt.verify(requestJwt, false)
+  const verifyOffline = false
+  const tokenInfo = await keycloak.jwt.verify(requestJwt, verifyOffline)
 } catch (error) {
   console.log(error)
 }
@@ -76,18 +78,108 @@ This method returns a boolean stating if the user has a specific app role or not
     console.log('This user do not have the realm_role_one')
 ```
 
-## AccessToken
+## .accessToken
+
+The **AccessToken** class defines methods to simplify retrieving tokens, refresh them and retrieving user info. The methods
+of this class also were written to update the tokens case they're expired, which means, just use the methods, and they will
+internally refresh themselves case they need it. It's accessible in the keycloak context over the property `.accessToken`.
 
 ### .info
 
+This method retrieves the user info for the specific realm from keycloak. If the user access token is expired, it will be
+refreshed before requesting the info again.
+
+```js
+// requestJwt - the access token received from the request
+const userInfo = await keycloak.accessToken.info(requestJwt)
+```
+
 ### .refresh
+
+This method refreshes the user current access token. If the token refresh fails, another access token will be
+requested from the keycloak server.
+
+```js
+// requestJwt - the access token received from the request
+await keycloak.accessToken.refresh(requestJwt)
+```
 
 ### .get
 
-## users
+This method retrieves the a new access token for that specific realm user.
+
+```js
+try {
+  // requestJwt - the access token received from the request
+  const newAccessToken = await keycloak.accessToken.get(requestJwt)
+} catch (error) {
+  console.log(error)
+}
+```
+
+## .users
+
+The **UserManager** class define methods to simplify user management for simple use cases. It's accessible in the keycloak 
+context over the property `.users`.
 
 ### .details
 
+This method the user details from the realm in the keycloak server.
+
+```js
+try {
+  // id - the user id
+  const userDetails = await keycloak.users.details(id)
+} catch (error) {
+  console.log(error)
+}
+```
+
 ### .roles
 
+This method returns the user roles for a given client.
+
+```js
+try {
+  // id - the user id
+  // clientsIds - the ids of the clients to retrieve that user roles for that client
+  const clientsIds = ['backend_client']
+  const userDetails = await keycloak.users.roles(id, clientsIds)
+} catch (error) {
+  console.log(error)
+}
+```
+
+To include the realms roles it should be added a boolean as the last argument
+
+```js
+try {
+  // id - the user id
+  // clientsIds - the ids of the clients to retrieve that user roles for that client
+  const clientsIds = ['backend_client']
+  const includeRealmRoles = true
+  const userDetails = await keycloak.users.roles(id, clientsIds, includeRealmRoles)
+} catch (error) {
+  console.log(error)
+}
+```
+
 ### .create
+
+This method creates a user in the realm of the keycloak server.
+
+```js
+try {
+  const user = {
+    email: 'example@email.com',
+    enabled: true,
+    username: 'example',
+    firstName: 'first',
+    lastName: 'last',
+    password: 'example_1234'
+  }
+  await keycloak.users.create(user)
+} catch (error) {
+  console.log(error)
+}
+```

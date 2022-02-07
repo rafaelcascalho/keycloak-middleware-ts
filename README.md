@@ -2,6 +2,8 @@
 
 This is an TS implementation of the JS version of the [keycloak-backend npm package.](https://github.com/jkyberneees/keycloak-backend)
 
+## Quick Start
+
 The documentation below is from the same package, but will be rewritten soon.
 
 > Note: Version 2.x uses `jsonwebtoken 8.x`

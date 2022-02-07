@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios'
 
-import { KeycloakTokenResponse } from './interfaces'
-import { KeycloakConfig } from './interfaces'
+import { KeycloakConfig, KeycloakTokenResponse } from './interfaces'
 
 class AccessToken {
   private accessToken: string
