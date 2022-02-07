@@ -5,7 +5,7 @@ This is an TS implementation of the JS version of the [keycloak-backend npm pack
 ## Description
 
 This module provides a minimal, simple to use and direct approach to enable backend integration with keycloak enabling most usual features
-of authentication, token handling and user management. [Check mor about keycloak here.](http://www.keycloak.org/)
+of authentication, token handling and user management. [Check more about keycloak here.](http://www.keycloak.org/)
 
 ## Quick Start
 
