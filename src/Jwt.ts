@@ -28,6 +28,12 @@ class Jwt {
   }
 
   private async verifyOffline(accessToken: string) {
+    if (!this.config.jwtKey)
+      throw new Error('Missing key to enable offline JWT verification')
+
+    if (!this.config.jwtKeyAlgorithms)
+      throw new Error('Missing key algorithms to enable offline JWT verification')
+
     const options = { algorithms: this.config.jwtKeyAlgorithms }
     await asyncVerify(accessToken, this.config.jwtKey, options)
     return new Token(accessToken)
