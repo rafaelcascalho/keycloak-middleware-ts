@@ -1,95 +1,79 @@
 # keycloak-backend-ts
 
-This is an TS implementation of the JS version of the [keycloak-backend npm package.](https://github.com/jkyberneees/keycloak-backend)
+This is an TS implementation of the JS version of the [keycloak-backend npm package.](https://github.com/jkyberneees/keycloak-backend).
+
+## Description
+
+This module provides a minimal, simple to use and direct approach to enable backend integration with keycloak enabling most usual features
+of authentication, token handling and user management. [Check mor about keycloak here.](http://www.keycloak.org/)
 
 ## Quick Start
 
-The documentation below is from the same package, but will be rewritten soon.
+### Install Via NPM
 
-> Note: Version 2.x uses `jsonwebtoken 8.x`
+```sh
+npm install -S keycloak-backend-ts
+```
 
-## Keycloak Introduction
-The awesome open-source Identity and Access Management solution develop by RedHat.
-Keycloak support those very nice features you are looking for:
-- Single-Sign On
-- LDAP and Active Directory
-- Standard Protocols
-- Social Login
-- Clustering
-- Custom Themes
-- Centralized Management
-- Identity Brokering
-- Extensible
-- Adapters
-- High Performance
-- Password Policies
+### Set Up Your Keycloak Realm and Client For The Backend
 
-More about Keycloak: http://www.keycloak.org/
+It's necessary to have a realm and an active client correctly configured to be able to access all the features. [Check this guide to see how to do that.](https://medium.com/keycloak/keycloak-realm-client-configuration-dfd7c8583489)
 
-## Using the keycloak-backend module
-### Instantiating
+### Usage
+
+Just create a new keycloak context and use the methods of the lib API.
+
 ```js
-const keycloak = require('keycloak-backend')({
-    "realm": "your realm name",
-    "auth-server-url": "http://keycloak.dev:8080",
-    "clientId": "your client name",
-    "clientSecret": "c88a2c21-9d1a-4f83-a18d-66d75c4d8020", // if required
-    "username": "your service username",
-    "password": "your service password"
+// import the createKeycloakCtx method from the module
+import createKeycloakCtx from "keycloak-backend-ts";
+
+// create the keycloak context
+const keycloak = createKeycloakCtx({
+  realm: "realm name",
+  authServerUrl: "keycloak server url",
+  clientId: "client name",
+  clientSecret: "client secret", // if required
+  username: "service username",
+  password: "service password",
+  jwtKey: "realm public key", // optional
+  jwtKeyAlgorithms: ["realm public key to decode JWT keys"], // optional
 });
+
+// use the created context easily
+const accessToken = await keycloak.accessToken.get();
+const tokenInfo = await keycloak.accessToken.info(accessToken);
+const token = await keycloak.jwt.verify(accessToken);
+if (token.isExpired()) throw new Error("your error message");
 ```
 
-### Validating access tokens
-#### Online validation:
-This method requires online connection to the Keycloak service to validate the access token. It is highly secure since it also check for the possible token invalidation. The disadvantage is that a request to the Keycloak service happens on every validation attempt.
-```js
-let token = await keycloak.jwt.verify(someAccessToken);
-//console.log(token.isExpired());
-//console.log(token.hasRealmRole('user'));
-//console.log(token.hasApplicationRole('app-client-name', 'some-role'));
+## Contributing
+
+To contribute you can create issues or modify the code or docs yourself, and submit the PRs for new versions. If you're willing
+to help beyound issues creation, just fork this repo, update the code or docs, create tests if some code were added, and submit the PR.
+To make everything tight, first create and claim an issue. Then, just code it :smile:
+
+### Installing Dependencies
+
+```sh
+npm install -D
 ```
 
-#### Offline validation:
-This method perform offline JWT verification against the access token using the Keycloak Realm public key. Performance is higher compared to the online method, the disadvantage is that access token invalidation will not work until the token is expired.
-```js
-let cert = fs.readFileSync('public_cert.pem');
-token = await keycloak.jwt.verifyOffline(someAccessToken, cert);
-//console.log(token.isExpired());
-//console.log(token.hasRealmRole('user'));
-//console.log(token.hasApplicationRole('app-client-name', 'some-role'));
+### Tests
+
+```sh
+npm test
 ```
 
-### Generating service access token
-Efficiently maintaining a valid access token can be hard. Get it easy by using:
-```js
-let accessToken = await keycloak.accessToken.get()
-```
-Then:
-```js
-request.get('http://serviceb.com/v1/fetch/accounts', {
-  'auth': {
-    'bearer': await keycloak.accessToken.get()
-  }
-});
-```
-> For this feature, the authentication details described in the configuration options are used.
+To generate coverage run the command below (this will be improved in the future).
 
-### Retrieve users information by id
-Sometimes backend services only have a target user identifier to digg for details, in such cases, you can contact the Keycloak service by:
-
-#### Retrieve user details by id
-```js
-let details = await keycloak.users.details(uid);
+```sh
+npm run test:cov
 ```
 
-#### Retrieve user roles by id
-```js
-let details = await keycloak.users.roles(uid, [
-    // clients id here for roles retrieval
-  ], 
-  true // include realm roles ?
-);
-```
+## Next Steps
 
-## Tests
-WIP
+For the foreseeable future, these are the next steps:
+
+- [  ] create pipelines to run the automated tests, static code analysis
+- [  ] add pre commit step automation for tests, linting and formatting
+- [  ] improve code coverage to enable threshold of 90-100%
