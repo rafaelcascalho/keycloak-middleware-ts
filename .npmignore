@@ -1,2 +1,6 @@
 test/
+tsconfig.json
+japaFile.js
 .gitignore
+LICENSE
+docs/
