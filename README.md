@@ -1,5 +1,7 @@
 # keycloak-backend-ts
 
+[![codecov](https://codecov.io/gh/rafaelcascalho/keycloak-middleware-ts/branch/main/graph/badge.svg?token=L8LAFN62KQ)](https://codecov.io/gh/rafaelcascalho/keycloak-middleware-ts)
+
 This is an TS implementation of the JS version of the [keycloak-backend npm package.](https://github.com/jkyberneees/keycloak-backend).
 
 ## Description
