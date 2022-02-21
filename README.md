@@ -1,4 +1,4 @@
-# keycloak-backend-ts
+# keycloak-middleware-ts
 
 [![codecov](https://codecov.io/gh/rafaelcascalho/keycloak-middleware-ts/branch/main/graph/badge.svg?token=L8LAFN62KQ)](https://codecov.io/gh/rafaelcascalho/keycloak-middleware-ts)
 
@@ -14,7 +14,7 @@ of authentication, token handling and user management. [Check more about keycloa
 ### Install Via NPM
 
 ```sh
-npm install -S keycloak-backend-ts
+npm install -S keycloak-middleware-ts
 ```
 
 ### Set Up Your Keycloak Realm and Client For The Backend
@@ -27,7 +27,7 @@ Just create a new keycloak context and use the methods of the lib API.
 
 ```js
 // import the createKeycloakCtx method from the module
-import createKeycloakCtx from "keycloak-backend-ts";
+import createKeycloakCtx from "keycloak-middleware-ts";
 
 // create the keycloak context
 const keycloak = createKeycloakCtx({
