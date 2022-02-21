@@ -59,8 +59,8 @@ class AccessToken {
       grant_type: 'password',
       username: this.config.username,
       password: this.config.password,
-      clientId: this.config.clientId,
-      clientSecret: this.config.clientSecret
+      client_id: this.config.clientId,
+      client_secret: this.config.clientSecret
     }
     const params = new URLSearchParams(requestParams)
     const endpoint = `${this.baseUrl}/protocol/openid-connect/token`
