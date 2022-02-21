@@ -43,13 +43,14 @@ class UserManager {
   }
 
   async create(user: User) {
+    const { password, ...userData } = user
     const endpoint = this.baseUrl
     const headers = await this.mountHeaders()
 
-    const response = await this.request.post(endpoint, user, { headers })
+    const response = await this.request.post(endpoint, userData, { headers })
     const userId: string = response.headers.location.split('/').pop()
     await Promise.allSettled([
-      this.savePassword(userId, user.password, headers),
+      this.savePassword(userId, password, headers),
       this.verifyEmail(userId, headers)
     ])
   }
