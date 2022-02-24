@@ -15,6 +15,10 @@ class Token {
     this.signature = Buffer.from(signature)
   }
 
+  userId() {
+    return this.content.sub
+  }
+
   isExpired() {
     const expInMs = this.toMs(this.content.exp)
     if (expInMs > Date.now()) return false

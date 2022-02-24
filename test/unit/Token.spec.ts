@@ -1,7 +1,7 @@
 import test from 'japa'
 
 import Token from '../../src/Token'
-import { expiredToken, notExpiredToken, tokenWithRoles } from '../mock/tokens'
+import { expiredToken, notExpiredToken, tokenWithRoles, tokenWithUserId } from '../mock/tokens'
 
 test.group('Token.isExpired', () => {
   test('when the token is expired should return true', (assert) => {
@@ -20,6 +20,17 @@ test.group('Token.isExpired', () => {
     assert.isFalse(result)
   })
 })
+
+test.group('Token.userId', () => {
+  test('returns the user id as the prop `sub` of the token', (assert) => {
+    const token = new Token(tokenWithUserId)
+
+    const result = token.userId()
+
+    assert.equal(result, '02f609c0-e9a9-4b02-b1c9-4d84693ad692')
+  })
+})
+
 
 test.group('Token.hasAppRole', () => {
   test('when the token does not have the expected app role should return true', (assert) => {

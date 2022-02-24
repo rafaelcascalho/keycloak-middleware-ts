@@ -58,6 +58,16 @@ This method returns a boolean for the token expiration.
     throw new Error('Expired Token')
 ```
 
+#### .userId
+
+This method returns a string with the user id in keycloak for that jwt.
+
+```js
+  const tokenInfo = await keycloak.jwt.verify(requestJwt)
+  const id = tokenInfo.userId()
+  console.log(id) // '123e4567-e89b-12d3-a456-426614174000'
+```
+
 #### hasAppRole
 
 This method returns a boolean stating if the user has a specific app role or not.
