@@ -193,3 +193,38 @@ try {
   console.log(error)
 }
 ```
+
+
+### .getAttributes
+
+This method returns the attributes of a given user
+
+```js
+try {
+  const userId = 'example-id'
+  const userAttributes = await keycloak.users.getAttributes(userId)
+} catch (error) {
+  console.log(error)
+}
+```
+
+
+### .addAttributes
+
+This method add new attributes for a given user
+
+```js
+try {
+  const userId = 'example-id'
+  const newUserAttributes: Attribute[] = [
+  {key: 'country',
+  value: ['mx']},
+  {key: 'phone area code',
+  value: ['+52']}
+  ]
+  
+  await keycloak.users.addAttributes(userId, newUserAttributes)
+} catch (error) {
+  console.log(error)
+}
+```
