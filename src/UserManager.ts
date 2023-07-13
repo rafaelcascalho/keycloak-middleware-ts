@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosResponse } from 'axios'
 
 import AccessToken from './AccessToken'
-import { KeycloakConfig, User, UpdateCredentialOptions, Headers } from './interfaces'
+import {KeycloakConfig, User, UpdateCredentialOptions, Headers, Attribute} from './interfaces'
 
 class UserManager {
   private readonly baseUrl: string
@@ -53,6 +53,44 @@ class UserManager {
       this.savePassword(userId, password, headers),
       this.verifyEmail(userId, headers)
     ])
+  }
+
+  async addAttributes(id: string, attributes: Attribute[]){
+    const headers = await this.mountHeaders()
+    const endpoint = `${this.baseUrl}/${id}`
+
+    const previousAttributes: Attribute[] = await this.getAttributes(id)
+    const combinedAttributes: Attribute[] = previousAttributes.concat(attributes)
+
+    const mappedAttributes = new Map<string, string[]>()
+    combinedAttributes.forEach((attribute) => {
+      mappedAttributes.set(attribute.key, attribute.value)
+    })
+    
+    const body = Object.fromEntries(mappedAttributes)
+
+    await this.request.put(endpoint,{ attributes: body }, { headers })
+  }
+
+  async getAttributes(id: string): Promise<Attribute[]> {
+    const headers = await this.mountHeaders()
+    const endpoint = `${this.baseUrl}/${id}`
+
+    const response = await this.request.get(endpoint, {headers})
+
+    const parsedResponse: Attribute[] = []
+
+    try{
+      const entries = Object.entries(response?.data.attributes)
+
+      entries.forEach((attribute) => {
+        parsedResponse.push({key: attribute[0], value: attribute[1] as string []})
+      })
+    }catch (e) {
+      console.log('Unable to parse response to Attribute array')
+    }
+
+    return parsedResponse;
   }
 
   // IMPROVE: the any types used in this function need to be replaced by a declared interface

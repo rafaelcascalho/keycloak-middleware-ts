@@ -1,6 +1,6 @@
 import test from 'japa'
 
-import { User } from '../../src/interfaces'
+import { User, Attribute } from '../../src/interfaces'
 import AccessToken from '../../src/AccessToken'
 import UserManager from '../../src/UserManager'
 import { mockConfig, mockAxiosInstance } from '../setup'
@@ -53,6 +53,45 @@ test.group('UserManager.roles', (group) => {
     await userManager.roles(fakeId, fakeIdsList)
 
     assert.isAtLeast(mockAxiosInstance._getCalls, expectedNumberOfGetCalls)
+  })
+
+  test.group('UserManager.getAttributes', (group) => {
+    group.beforeEach(() => {
+      mockAxiosInstance.refresh()
+    })
+
+    test('should call the endpoint once for the provided user id', async (assert) => {
+      const fakeId = '1'
+      const expectedNumberOfGetCalls = 1;
+
+      await userManager.getAttributes(fakeId)
+
+      assert.isAtLeast(mockAxiosInstance._getCalls, expectedNumberOfGetCalls)
+    })
+  })
+
+  test.group('UserManager.addAttributes', (group) => {
+    group.beforeEach(() => {
+      mockAxiosInstance.refresh()
+    })
+
+    test('should call both get and put endpoint for the provided user id', async (assert) => {
+      const fakeId = '1'
+      const fakeAttributes: Attribute[] = [
+        {key: 'country',
+        value: ['mx']},
+        {key: 'phone area code',
+        value: ['+52']}
+      ]
+
+      const expectedNumberOfGetCalls = 1;
+      const expectedNumberOfPutCalls = 1;
+
+      await userManager.addAttributes(fakeId, fakeAttributes)
+
+      assert.isAtLeast(mockAxiosInstance._getCalls, expectedNumberOfGetCalls)
+      assert.isAtLeast(mockAxiosInstance._putCalls, expectedNumberOfPutCalls)
+    })
   })
 
   test('should call the endpoint once for each id and one time more', async (assert) => {

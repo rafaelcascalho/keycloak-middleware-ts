@@ -24,6 +24,11 @@ export interface User {
   password: string
 }
 
+export interface Attribute{
+  key: string,
+  value: string[]
+}
+
 export interface UpdateCredentialOptions {
   temporary?: boolean
 }
